@@ -10,9 +10,14 @@
     "test": "npm run lint && npm run prettier:check"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
+    "date-fns": "^4.1.0",
+    "gray-matter": "^4.0.3",
     "next": "14.1.4",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "remark": "^15.0.1",
+    "remark-html": "^16.0.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.11",
