@@ -1,6 +1,9 @@
-'use client'; // จำเป็นสำหรับใช้ useState ใน layout
+// RootLayout.tsx
 
-import { ReactNode, useState } from 'react';
+'use client';
+
+import { useEffect, useState, ReactNode } from 'react';
+import './globals.css';
 
 interface RootLayoutProps {
   children: ReactNode;
@@ -9,122 +12,77 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   const [menuOpen, setMenuOpen] = useState(true);
 
+  const SIDEBAR_WIDTH = menuOpen ? 224 : 0; // px
+  const TOPBAR_HEIGHT = 60; // px
+
   return (
     <html lang="en">
-      <body style={{ margin: 0, fontFamily: 'Arial, sans-serif' }}>
-        <div style={{ display: 'flex', height: '100vh' }}>
-          {/* Sidebar */}
-          <aside
-            style={{
-              width: menuOpen ? '220px' : '0',
-              backgroundColor: '#222',
-              color: '#fff',
-              padding: menuOpen ? '1rem' : '0',
-              overflow: 'hidden',
-              transition: 'width 0.3s ease',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
+      <body className="m-0 font-sans bg-gray-200">
+        {/* Topbar */}
+        <header
+          className="fixed top-0 left-0 right-0 z-50 bg-gray-700 text-white flex items-center justify-between px-4"
+          style={{ height: TOPBAR_HEIGHT }}
+        >
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="cursor-pointer border-none bg-transparent text-2xl focus:outline-none"
+            aria-label="Toggle menu"
           >
-            {menuOpen && (
-              <>
-                <h2
-                  style={{
-                    marginBottom: '1rem',
-                    fontSize: '1.5rem',
-                    borderBottom: '2px solid #555',
-                    paddingBottom: '0.5rem',
-                  }}
-                >
-                  เมนู
-                </h2>
-                <nav>
-                  <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                    {[
-                      { href: '/', label: 'หน้าแรก' },
-                      { href: '/about', label: 'เกี่ยวกับ' },
-                      // เพิ่มเมนูอื่น ๆ ตามต้องการ
-                    ].map(({ href, label }) => (
-                      <li key={href} style={{ marginBottom: '0.75rem' }}>
-                        <a
-                          href={href}
-                          style={{
-                            color: 'white',
-                            textDecoration: 'none',
-                            fontSize: '1.1rem',
-                            display: 'block',
-                            padding: '0.5rem 1rem',
-                            borderRadius: '4px',
-                            transition: 'background-color 0.3s ease',
-                          }}
-                          onMouseEnter={(e) =>
-                            (e.currentTarget.style.backgroundColor = '#444')
-                          }
-                          onMouseLeave={(e) =>
-                            (e.currentTarget.style.backgroundColor =
-                              'transparent')
-                          }
-                        >
-                          {label}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
-              </>
-            )}
-          </aside>
+            &#9776;
+          </button>
 
-          {/* Main content */}
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-            <header
-              style={{
-                height: '60px',
-                backgroundColor: '#0070f3',
-                color: 'white',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '0 1rem',
-              }}
-            >
-              {/* Hamburger button */}
-              <button
-                onClick={() => setMenuOpen(!menuOpen)}
-                style={{
-                  fontSize: '1.5rem',
-                  background: 'none',
-                  border: 'none',
-                  color: 'white',
-                  cursor: 'pointer',
-                }}
-                aria-label="Toggle menu"
-              >
-                &#9776;
-              </button>
-
-              <div
-                style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
-              >
-                <span>สวัสดี, User</span>
-                <img
-                  src="/profile.jpg"
-                  alt="User Profile"
-                  style={{
-                    width: '40px',
-                    height: '40px',
-                    borderRadius: '50%',
-                    objectFit: 'cover',
-                  }}
-                />
-              </div>
-            </header>
-
-            <main style={{ padding: '1rem', overflowY: 'auto', flex: 1 }}>
-              {children}
-            </main>
+          <div className="flex items-center gap-2">
+            <span>สวัสดี, User</span>
+            <img
+              src="/profile.jpg"
+              alt="User Profile"
+              className="h-10 w-10 rounded-full object-cover"
+            />
           </div>
-        </div>
+        </header>
+
+        {/* Sidebar */}
+        <aside
+          className="fixed top-[60px] bottom-0 z-40 bg-gray-900 text-white overflow-y-auto transition-all duration-300"
+          style={{
+            width: SIDEBAR_WIDTH,
+            padding: menuOpen ? '1rem' : '0',
+          }}
+        >
+          {menuOpen && (
+            <>
+              <h2 className="mb-4 border-b-2 border-gray-700 pb-2 text-2xl">เมนู</h2>
+              <nav>
+                <ul className="m-0 list-none p-0">
+                  {[{ href: '/', label: 'หน้าแรก' }, { href: '/about', label: 'เกี่ยวกับ' }].map(({ href, label }) => (
+                    <li key={href} className="mb-3">
+                      <a
+                        href={href}
+                        className="block rounded px-4 py-2 transition-colors hover:bg-gray-700"
+                      >
+                        {label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </>
+          )}
+        </aside>
+
+        {/* Main Content */}
+        <main
+          className="fixed right-0 bottom-0 overflow-y-auto"
+          style={{
+            top: TOPBAR_HEIGHT,
+            left: SIDEBAR_WIDTH,
+            padding: '2rem',
+          }}
+        >
+          <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-md p-8 mt-4 mb-8 min-h-[calc(100vh-100px)]">
+            {children}
+          </div>
+        </main>
       </body>
     </html>
   );
