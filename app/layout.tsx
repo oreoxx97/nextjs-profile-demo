@@ -1,8 +1,6 @@
-// RootLayout.tsx
-
 'use client';
 
-import { useEffect, useState, ReactNode } from 'react';
+import { useState, ReactNode } from 'react';
 import './globals.css';
 
 interface RootLayoutProps {
@@ -11,16 +9,15 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   const [menuOpen, setMenuOpen] = useState(true);
-
   const SIDEBAR_WIDTH = menuOpen ? 224 : 0; // px
   const TOPBAR_HEIGHT = 60; // px
 
   return (
     <html lang="en">
-      <body className="m-0 font-sans bg-gray-200">
+      <body className="m-0 bg-gray-200 font-sans">
         {/* Topbar */}
         <header
-          className="fixed top-0 left-0 right-0 z-50 bg-gray-700 text-white flex items-center justify-between px-4"
+          className="fixed top-0 right-0 left-0 z-50 flex items-center justify-between bg-gray-700 px-4 text-white"
           style={{ height: TOPBAR_HEIGHT }}
         >
           <button
@@ -43,7 +40,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
         {/* Sidebar */}
         <aside
-          className="fixed top-[60px] bottom-0 z-40 bg-gray-900 text-white overflow-y-auto transition-all duration-300"
+          className="fixed top-[60px] bottom-0 left-0 z-40 overflow-y-auto bg-gray-900 text-white transition-all duration-300"
           style={{
             width: SIDEBAR_WIDTH,
             padding: menuOpen ? '1rem' : '0',
@@ -51,10 +48,16 @@ export default function RootLayout({ children }: RootLayoutProps) {
         >
           {menuOpen && (
             <>
-              <h2 className="mb-4 border-b-2 border-gray-700 pb-2 text-2xl">เมนู</h2>
+              <h2 className="mb-4 border-b-2 border-gray-700 pb-2 text-2xl">
+                เมนู
+              </h2>
               <nav>
                 <ul className="m-0 list-none p-0">
-                  {[{ href: '/', label: 'หน้าแรก' }, { href: '/about', label: 'เกี่ยวกับ' }].map(({ href, label }) => (
+                  {[
+                    { href: '/', label: 'หน้าแรก' },
+                    { href: '/about', label: 'เกี่ยวกับ' },
+                    { href: '/aboutBlurPage', label: 'blur' },
+                  ].map(({ href, label }) => (
                     <li key={href} className="mb-3">
                       <a
                         href={href}
@@ -77,9 +80,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
             top: TOPBAR_HEIGHT,
             left: SIDEBAR_WIDTH,
             padding: '2rem',
+            height: `calc(100vh - ${TOPBAR_HEIGHT}px)`,
           }}
         >
-          <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-md p-8 mt-4 mb-8 min-h-[calc(100vh-100px)]">
+          <div className="shadow-custom mx-auto mt-8 mb-8 min-h-full max-w-6xl rounded-xl bg-white p-8">
             {children}
           </div>
         </main>
