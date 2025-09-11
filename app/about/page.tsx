@@ -47,6 +47,21 @@ export default function AboutPage() {
 
   return (
     <div className="space-y-4 p-4">
+      <div className="">
+        <div className="bg-white p-6 rounded-2xl shadow-custom w-96">
+          <input
+            placeholder="Type here..."
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+          />
+
+          <textarea
+            placeholder="Write something..."
+            rows={4}
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+      </div>
+
       {items.map((item) => (
         <div
           key={item}
@@ -76,6 +91,10 @@ export default function AboutPage() {
           <div className="text-center text-gray-500">↓ Scroll for more ↓</div>
         )}
       </div>
+
+
+
+
     </div>
   );
 }

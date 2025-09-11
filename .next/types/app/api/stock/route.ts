@@ -1,4 +1,4 @@
-// File: D:\next-learn-starter\app\api\stock\route.ts
+// File: C:\Users\User\Documents\GitHub\nextjs-profile-demo\app\api\stock\route.ts
 import * as entry from '../../../../../app/api/stock/route.js'
 import type { NextRequest } from 'next/server.js'
 

@@ -1,4 +1,4 @@
-// File: D:\next-learn-starter\app\layout.tsx
+// File: C:\Users\User\Documents\GitHub\nextjs-profile-demo\app\layout.tsx
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
